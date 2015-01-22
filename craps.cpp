@@ -23,7 +23,7 @@ void welcome();
 void playGame();
 
 // gets a valid bet from the user
-void placeBet(Bank, GameState&);
+void placeBet(Bank&, GameState&);
 
 int main() {
 
@@ -60,17 +60,23 @@ void playGame() {
 		// place a bet to start a round
 		if(state == WAGER) placeBet(bank, state);
 
-		if(state == ROLLING) cout << "ROLLING" << endl;
+		if(state == ROLLING) {
+
+			// roll the dice and print the result
+			dice.roll();
+			dice.print();
+		}
 
 		state = QUIT;
 	}
 }
 
-void placeBet(Bank bank, GameState& state) {
+void placeBet(Bank& bank, GameState& state) {
 
 	bool bet_placed = false;
 	float wager;
 
+	// get a valid bet from the user
 	do {
 
 		cout << "Your current balance is: $" << bank.getBalance() << endl;
@@ -81,5 +87,7 @@ void placeBet(Bank bank, GameState& state) {
 	
 	}while(!bet_placed);
 	
+
+	// after betting, the user rolls the dice
 	state = ROLLING;
 }
