@@ -28,6 +28,9 @@ void placeBet(Bank&, GameState&);
 // parses outcomes of rolls
 void outcome(int, int&, GameState&);
 
+// prompts the user with a list of decisions based on game state
+void decision(GameState&, Bank&, int);
+
 // -- functions
 int main() {
 
@@ -79,7 +82,12 @@ void playGame() {
 			outcome(dice.getTotal(), point, state);
 		}
 
-		state = QUIT;
+		// if user won/lost, update bank balance
+		if(state == WIN) bank.win();
+		else if(state == LOSE) bank.lose();
+
+		// after first dice roll, give user options based on outcome
+		decision(state, bank, point);
 	}
 }
 
@@ -98,7 +106,6 @@ void placeBet(Bank& bank, GameState& state) {
 		bet_placed = bank.bet(wager);
 	
 	}while(!bet_placed);
-	
 
 	// after betting, the user rolls the dice
 	state = ROLLING;
@@ -127,4 +134,41 @@ void outcome(int roll, int& point, GameState& state) {
 		// state stays = to ROLLING
 		else point = roll
 	}
+}
+
+void decision(GameState& state, Bank& bank, int point) {
+
+	// print a message based on state
+	if(state == ROLLING) cout << "Your point to make is " << point << "." << endl;
+	else if(state == WIN) cout << "You win!" << endl;
+	else if(state == LOSE) cout << "You lost." << endl;
+
+	// store user decision
+	char choice;
+
+	// give a list of decisions based on outcome
+	if(state == ROLLING) {
+
+		do {
+
+			cout << "What do you want to do next? Keep rolling (R) or Quit (Q)?: ";
+			cin >> choice;
+		
+		}while(choice != 'r' & choice != 'q');
+	
+	}else {
+
+		do {
+
+			cout << "What do you want to do next? Play again (P), Check balance (B), or Quit (Q)?: ";
+			cin >> choice;
+		
+			// checking balance should happen, then ask again what to do next
+			if(choice == 'b') cout << "Current balance: $" << bank.getBalance() << endl << endl;
+
+		}while(choice != 'p' & choice != 'q');
+	}
+
+	// parse user decision, if choice was 'r', no need to change state
+	state = (choice == 'p') ? WAGER : QUIT;
 }
