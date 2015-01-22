@@ -14,6 +14,11 @@ using namespace std;
 // -- constants
 enum GameState { WAGER, ROLLING, WIN, LOSE, QUIT };
 
+const char KEEP_ROLLING = 'r';
+const char PLAY_AGAIN = 'p';
+const char CHECK_BALANCE = 'b';
+const char QUIT_GAME = 'q';
+
 // -- prototypes
 
 // prints out a welcome message with information on how to play
@@ -178,7 +183,7 @@ void decision(GameState& state, Bank& bank, int point) {
 			cout << "What do you want to do next? Keep rolling (R) or Quit (Q)?: ";
 			cin >> choice;
 		
-		}while(choice != 'r' & choice != 'q');
+		}while(choice != KEEP_ROLLING & choice != QUIT_GAME);
 	
 	}else {
 
@@ -188,12 +193,12 @@ void decision(GameState& state, Bank& bank, int point) {
 			cin >> choice;
 		
 			// checking balance should happen, then ask again what to do next
-			if(choice == 'b') cout << endl << "Your current balance is: $" << bank.getBalance() << endl << endl;
+			if(choice == CHECK_BALANCE) cout << endl << "Your current balance is: $" << bank.getBalance() << endl << endl;
 
-		}while(choice != 'p' & choice != 'q');
+		}while(choice != PLAY_AGAIN & choice != QUIT_GAME);
 	}
 
-	// parse user decision, if choice was 'r', no need to change state
-	if(choice == 'p') state = WAGER;
-	else if(choice == 'q') state = QUIT;
+	// parse user decision, if choice was KEEP_ROLLING, no need to change state
+	if(choice == PLAY_AGAIN) state = WAGER;
+	else if(choice == QUIT_GAME) state = QUIT;
 }
