@@ -15,6 +15,9 @@ Bank::Bank(float initial_balance /* = 100 */) {
 
 bool Bank::bet(float amount) {
 
+	// dont allow bets of 0 or below
+	if(amount <= 0) return false;
+
 	// cannot bet more than you have
 	if(amount > balance) return false;
 
