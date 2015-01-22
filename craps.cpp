@@ -45,7 +45,9 @@ void welcome() {
 
 	cout << endl;
 	cout << "**************************************************" << endl;
+	cout << "*                                                *" << endl;
 	cout << "* ---------------- HOW TO PLAY ----------------- *" << endl;
+	cout << "*                                                *" << endl;
 	cout << "* A player rolls two dice. If the sum is 7 or 11 *" << endl;
 	cout << "* on the first roll, the player wins. If the sum *" << endl;
 	cout << "* is 2,3, or 12 (called craps), the player loses *" << endl;

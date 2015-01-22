@@ -12,7 +12,7 @@
 
 class Dice {
 
-	// stores values from rollDice()
+	// stores values from roll()
 	int first_die;
 	int second_die;
 
