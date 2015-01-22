@@ -12,16 +12,12 @@ class Dice {
 
 	// stores values from rollDice()
 	int first_die;
-	int* first_die_p;
-
 	int second_die;
-	int* second_die_p;
 
 public:
 
-	// constructor and destructor
+	// constructor
 	Dice();
-	~Dice();
 
 	// assigns random values 1-6 to first_die and second_die
 	void roll();

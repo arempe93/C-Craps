@@ -13,10 +13,7 @@ Dice::Dice() {
 
 	// give the dice some initial values
 	first_die = 0;
-	first_die_p = &first_die;
-	
 	second_die = 0;
-	second_die_p = &second_die;
 
 	// seed the random number generator
 	srand(time(NULL));
@@ -39,11 +36,4 @@ void Dice::print() {
 
 	// print individual and total roll
 	std::cout << first_die << " + " << second_die << " = " << getTotal() << std::endl;
-}
-
-Dice::~Dice(){
-
-	// free up memory used by Die
-	delete first_die_p;
-	delete second_die_p;
 }
