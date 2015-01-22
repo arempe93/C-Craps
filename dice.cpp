@@ -1,15 +1,15 @@
 /*
-	Die.cpp
+	dice.cpp
 	Andrew Rempe
 
 	Implements the Die class defined in Die.h
 */
 
-#include "Die.h"
+#include "dice.h"
 #include <iostream>
 #include <stdlib.h>
 
-Die::Die() {
+Dice::Dice() {
 
 	// give the dice some initial values
 	first_die = 0;
@@ -22,26 +22,26 @@ Die::Die() {
 	srand(time(NULL));
 }
 
-void Die::rollDice() {
+void Dice::roll() {
 
 	// choose a random number from 1-6 and assign to dice
 	first_die = (rand() % 6) + 1;
 	second_die = (rand() % 6) + 1;
 }
 
-int Die::getTotalRoll() {
+int Dice::getTotal() {
 
 	// returns total value
 	return first_die + second_die;
 }
 
-void Die::printRoll() {
+void Dice::print() {
 
 	// print individual and total roll
-	std::cout << first_die << " + " << second_die << " = " << getTotalRoll() << std::endl;
+	std::cout << first_die << " + " << second_die << " = " << getTotal() << std::endl;
 }
 
-Die::~Die(){
+Dice::~Dice(){
 
 	// free up memory used by Die
 	delete first_die_p;

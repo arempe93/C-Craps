@@ -1,16 +1,14 @@
 /*
-	Die.h
+	dice.h
 	Andrew Rempe
 
 	Outlines the Die class
 */
 
-#ifndef Die_H
-#define Die_H
+#ifndef dice_H
+#define dice_H
 
-#include <string>
-
-class Die {
+class Dice {
 
 	// stores values from rollDice()
 	int first_die;
@@ -22,17 +20,17 @@ class Die {
 public:
 
 	// constructor and destructor
-	Die();
-	~Die();
+	Dice();
+	~Dice();
 
 	// assigns random values 1-6 to first_die and second_die
-	void rollDice();
+	void roll();
 
 	// returns first_die + second_die
-	int getTotalRoll();
+	int getTotal();
 
 	// prints the outcome of the roll to the screen
-	void printRoll();
+	void print();
 };
 
 #endif

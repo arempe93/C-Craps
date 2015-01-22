@@ -6,7 +6,7 @@
 */
 
 // includes
-#include "Die.h"
+#include "dice.h"
 #include <iostream>
 using namespace std;
 
@@ -17,8 +17,8 @@ enum GameState { WAGER, ROLLING, WIN, LOSE };
 
 int main() {
 
-	Die d;
+	Dice d;
 
-	d.rollDice();
-	d.printRoll();
+	d.roll();
+	d.print();
 }
