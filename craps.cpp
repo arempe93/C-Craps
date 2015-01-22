@@ -76,15 +76,12 @@ void playGame() {
 		// place a bet to start a round
 		if(state == WAGER) placeBet(bank, state);
 
-		if(state == ROLLING) {
+		// roll the dice and print the result
+		dice.roll();
+		dice.print();
 
-			// roll the dice and print the result
-			dice.roll();
-			dice.print();
-
-			// parse outcome of last roll
-			outcome(dice.getTotal(), point, state);
-		}
+		// parse outcome of last roll
+		outcome(dice.getTotal(), point, state);
 
 		// if a round is not in progress, or user quit - end the round
 		endRound(point, bank, state);
