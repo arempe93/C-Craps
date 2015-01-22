@@ -28,6 +28,9 @@ void placeBet(Bank&, GameState&);
 // parses outcomes of rolls
 void outcome(int, int&, GameState&);
 
+// does end of round operations and updates game state
+void endRound(int&, Bank&, GameState&);
+
 // prompts the user with a list of decisions based on game state
 void decision(GameState&, Bank&, int);
 
@@ -83,12 +86,8 @@ void playGame() {
 			outcome(dice.getTotal(), point, state);
 		}
 
-		// if user won/lost, update bank balance
-		if(state == WIN) bank.win();
-		else if(state == LOSE) bank.lose();
-
-		// if a game ends, clear point
-		if(state == WIN | state == LOSE) point = 0;
+		// if a round is not in progress, or user quit - end the round
+		endRound(point, bank, state);
 
 		// after dice roll, give user options based on outcome
 		if(state != QUIT) decision(state, bank, point);
@@ -100,29 +99,19 @@ void placeBet(Bank& bank, GameState& state) {
 	bool bet_placed = false;
 	float wager;
 
-	// if they still have money left, they can bet.
-	if(!bank.bankrupt()) {
+	// get a valid bet from the user
+	do {
+
+		cout << "Your current balance is: $" << bank.getBalance() << endl;
+		cout << "Place a wager: $";
+
+		cin >> wager;
+		bet_placed = bank.bet(wager);
 	
-		// get a valid bet from the user
-		do {
+	}while(!bet_placed);
 
-			cout << "Your current balance is: $" << bank.getBalance() << endl;
-			cout << "Place a wager: $";
-
-			cin >> wager;
-			bet_placed = bank.bet(wager);
-		
-		}while(!bet_placed);
-
-		// after betting, the user rolls the dice
-		state = ROLLING;
-	
-	}else {
-
-		// otherwise the game is over
-		cout << endl << "You're out of money! Better luck next time!" << endl << endl;
-		state = QUIT;
-	}
+	// after betting, the user rolls the dice
+	state = ROLLING;
 }
 
 void outcome(int roll, int& point, GameState& state) {
@@ -147,6 +136,22 @@ void outcome(int roll, int& point, GameState& state) {
 		// if the player didn't auto lose or win, that roll becomes the point
 		// state stays = to ROLLING
 		else point = roll;
+	}
+}
+
+void endRound(int& point, Bank& bank, GameState& state) {
+
+	// clear the point value for next round
+	point = 0;
+
+	// if user won/lost, update bank balance
+	if(state == WIN) bank.win();
+	else if(state == LOSE) bank.lose();
+
+	// if you're now out of money, its game over
+	if(bank.bankrupt()) {
+		cout << endl << "You're out of money! Better luck next time!" << endl << endl;
+		state = QUIT;
 	}
 }
 
