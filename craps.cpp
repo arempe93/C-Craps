@@ -65,7 +65,7 @@ void playGame() {
 	GameState state = WAGER;
 
 	// stores point to make if user rolls one
-	int point;
+	int point = 0;
 
 	while(state != QUIT) {
 
@@ -132,7 +132,7 @@ void outcome(int roll, int& point, GameState& state) {
 
 		// if the player didn't auto lose or win, that roll becomes the point
 		// state stays = to ROLLING
-		else point = roll
+		else point = roll;
 	}
 }
 
@@ -170,5 +170,6 @@ void decision(GameState& state, Bank& bank, int point) {
 	}
 
 	// parse user decision, if choice was 'r', no need to change state
-	state = (choice == 'p') ? WAGER : QUIT;
+	if(choice == 'p') state = WAGER;
+	else if(choice == 'q') state = QUIT;
 }
