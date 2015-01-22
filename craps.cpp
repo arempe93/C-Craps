@@ -84,7 +84,7 @@ void playGame() {
 		outcome(dice.getTotal(), point, state);
 
 		// if a round is not in progress, or user quit - end the round
-		endRound(point, bank, state);
+		if(state != ROLLING & state != QUIT) endRound(point, bank, state);
 
 		// after dice roll, give user options based on outcome
 		if(state != QUIT) decision(state, bank, point);
