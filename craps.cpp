@@ -25,6 +25,10 @@ void playGame();
 // gets a valid bet from the user
 void placeBet(Bank&, GameState&);
 
+// parses outcomes of rolls
+void outcome(int, int&, GameState&);
+
+// -- functions
 int main() {
 
 	welcome();
@@ -53,7 +57,12 @@ void playGame() {
 	// create game objects
 	Dice dice;
 	Bank bank;
+
+	// first step in a new game is to place a bet
 	GameState state = WAGER;
+
+	// stores point to make if user rolls one
+	int point;
 
 	while(state != QUIT) {
 
@@ -65,6 +74,9 @@ void playGame() {
 			// roll the dice and print the result
 			dice.roll();
 			dice.print();
+
+			// parse outcome of last roll
+			outcome(dice.getTotal(), point, state);
 		}
 
 		state = QUIT;
@@ -90,4 +102,29 @@ void placeBet(Bank& bank, GameState& state) {
 
 	// after betting, the user rolls the dice
 	state = ROLLING;
+}
+
+void outcome(int roll, int& point, GameState& state) {
+
+	// check if the player is trying to make the point
+	if(point != 0) {
+
+		// player rolled a 7, round over
+		if(roll == 7) state = LOSE;
+
+		// player made the point
+		if(roll == point) state = WIN;
+
+	}else {
+
+		// player rolled a 7 or 11 - auto win
+		if(roll == 7 | roll == 11) state = WIN;
+
+		// player rolled a 2, 3, or 12 - auto lose
+		else if(roll == 2 | roll == 3 | roll == 12) state = LOSE;
+
+		// if the player didn't auto lose or win, that roll becomes the point
+		// state stays = to ROLLING
+		else point = roll
+	}
 }
