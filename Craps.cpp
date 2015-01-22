@@ -13,7 +13,7 @@ using namespace std;
 // prototypes
 
 // constants
-enum GameState { USER_WAGER, ROLLING, PLAYER_WINS, PLAYER_LOSES };
+enum GameState { WAGER, ROLLING, WIN, LOSE };
 
 int main() {
 
