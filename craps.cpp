@@ -99,7 +99,7 @@ void placeBet(Bank& bank, GameState& state) {
 	// get a valid bet from the user
 	do {
 
-		cout << "Your current balance is: $" << bank.getBalance() << endl;
+		cout << endl << "Your current balance is: $" << bank.getBalance() << endl;
 		cout << "Place a wager: $";
 
 		cin >> wager;
@@ -142,8 +142,16 @@ void endRound(int& point, Bank& bank, GameState& state) {
 	point = 0;
 
 	// if user won/lost, update bank balance
-	if(state == WIN) bank.win();
-	else if(state == LOSE) bank.lose();
+	if(state == WIN) {
+	
+		cout << "You win!" << endl;
+		bank.win();
+	
+	}else if(state == LOSE) {
+		
+		cout << "You lose." << endl;
+		bank.lose();
+	}
 
 	// if you're now out of money, its game over
 	if(bank.bankrupt()) {
@@ -154,10 +162,8 @@ void endRound(int& point, Bank& bank, GameState& state) {
 
 void decision(GameState& state, Bank& bank, int point) {
 
-	// print a message based on state
+	// remind user of point to make if ROLLING
 	if(state == ROLLING) cout << "Your point to make is " << point << "." << endl;
-	else if(state == WIN) cout << "You win!" << endl;
-	else if(state == LOSE) cout << "You lost." << endl;
 
 	// store user decision
 	char choice;

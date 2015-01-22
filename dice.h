@@ -8,11 +8,24 @@
 #ifndef dice_H
 #define dice_H
 
+#include <string>
+
 class Dice {
 
 	// stores values from rollDice()
 	int first_die;
 	int second_die;
+
+	// strings for printing dice faces
+	std::string dice_output[6][3] = {
+
+		{ "     ", "  *  ", "     " },	// one
+		{ "*    ", "     ", "    *" },	// two
+		{ "*    ", "  *  ", "    *" },	// three
+		{ "*   *", "     ", "*   *" },	// four
+		{ "*   *", "  *  ", "*   *" },	// five
+		{ "*   *", "*   *", "*   *" }	// six
+	};
 
 public:
 

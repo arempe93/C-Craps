@@ -34,6 +34,15 @@ int Dice::getTotal() {
 
 void Dice::print() {
 
-	// print individual and total roll
-	std::cout << first_die << " + " << second_die << " = " << getTotal() << std::endl;
+	// print top of dice
+	std::cout << std::endl << "+-------+  +-------+" << std::endl;
+
+	// print the faces of the dice
+	for(int i = 0; i < 3; i ++) {
+
+		std::cout << "| " << dice_output[first_die - 1][i] << " |  | " << dice_output[second_die - 1][i] << " |" << std::endl;
+	}
+
+	// print bottom of dice
+	std::cout << "+-------+  +-------+" << std::endl << std::endl;
 }
