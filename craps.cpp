@@ -67,6 +67,7 @@ void playGame() {
 	// stores point to make if user rolls one
 	int point = 0;
 
+	// keep playing until the user quits
 	while(state != QUIT) {
 
 		// place a bet to start a round
@@ -86,8 +87,11 @@ void playGame() {
 		if(state == WIN) bank.win();
 		else if(state == LOSE) bank.lose();
 
-		// after first dice roll, give user options based on outcome
-		decision(state, bank, point);
+		// if a game ends, clear point
+		if(state == WIN | state == LOSE) point = 0;
+
+		// after dice roll, give user options based on outcome
+		if(state != QUIT) decision(state, bank, point);
 	}
 }
 
@@ -96,19 +100,29 @@ void placeBet(Bank& bank, GameState& state) {
 	bool bet_placed = false;
 	float wager;
 
-	// get a valid bet from the user
-	do {
-
-		cout << "Your current balance is: $" << bank.getBalance() << endl;
-		cout << "Place a wager: $";
-
-		cin >> wager;
-		bet_placed = bank.bet(wager);
+	// if they still have money left, they can bet.
+	if(!bank.bankrupt()) {
 	
-	}while(!bet_placed);
+		// get a valid bet from the user
+		do {
 
-	// after betting, the user rolls the dice
-	state = ROLLING;
+			cout << "Your current balance is: $" << bank.getBalance() << endl;
+			cout << "Place a wager: $";
+
+			cin >> wager;
+			bet_placed = bank.bet(wager);
+		
+		}while(!bet_placed);
+
+		// after betting, the user rolls the dice
+		state = ROLLING;
+	
+	}else {
+
+		// otherwise the game is over
+		cout << endl << "You're out of money! Better luck next time!" << endl << endl;
+		state = QUIT;
+	}
 }
 
 void outcome(int roll, int& point, GameState& state) {
@@ -164,7 +178,7 @@ void decision(GameState& state, Bank& bank, int point) {
 			cin >> choice;
 		
 			// checking balance should happen, then ask again what to do next
-			if(choice == 'b') cout << "Current balance: $" << bank.getBalance() << endl << endl;
+			if(choice == 'b') cout << endl << "Your current balance is: $" << bank.getBalance() << endl << endl;
 
 		}while(choice != 'p' & choice != 'q');
 	}
