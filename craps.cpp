@@ -7,20 +7,28 @@
 
 // -- includes
 #include "dice.h"
+#include "bank.h"
 #include <iostream>
 using namespace std;
+
+// -- constants
+enum GameState { WAGER, ROLLING, WIN, LOSE, QUIT };
 
 // -- prototypes
 
 // prints out a welcome message with information on how to play
 void welcome();
 
-// -- constants
-enum GameState { WAGER, ROLLING, WIN, LOSE };
+// loops through the game
+void playGame();
+
+// gets a valid bet from the user
+void placeBet(Bank, GameState&);
 
 int main() {
 
 	welcome();
+	playGame();
 }
 
 void welcome() {
@@ -38,4 +46,40 @@ void welcome() {
 	cout << "* lose the round.                                *" << endl;
 	cout << "**************************************************" << endl;
 	cout << endl;
+}
+
+void playGame() {
+
+	// create game objects
+	Dice dice;
+	Bank bank;
+	GameState state = WAGER;
+
+	while(state != QUIT) {
+
+		// place a bet to start a round
+		if(state == WAGER) placeBet(bank, state);
+
+		if(state == ROLLING) cout << "ROLLING" << endl;
+
+		state = QUIT;
+	}
+}
+
+void placeBet(Bank bank, GameState& state) {
+
+	bool bet_placed = false;
+	float wager;
+
+	do {
+
+		cout << "Your current balance is: $" << bank.getBalance() << endl;
+		cout << "Place a wager: $";
+
+		cin >> wager;
+		bet_placed = bank.bet(wager);
+	
+	}while(!bet_placed);
+	
+	state = ROLLING;
 }
